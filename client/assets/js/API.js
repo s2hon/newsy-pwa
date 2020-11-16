@@ -1,28 +1,17 @@
+import { createArticleIds, getParams } from './utils';
+
 // Loads articles
 export function loadArticles() {
-    const BASE_URL =
-      "https://newsapi.org/v2/everything?sortBy=published&apiKey=e41ee36d9a714a199911b42cb75a4fe3&q=";
-  
-    const { query } = getParams();
-    return new Promise((resolve, reject) => {
-      fetch(BASE_URL + query)
-        .then(res => res.json())
-        .then(data => {
-          const articles = createArticleIds(data.articles);
-          resolve(articles);
-        });
-    });
-  }
+const BASE_URL =
+    "https://newsapi.org/v2/everything?sortBy=published&apiKey=e41ee36d9a714a199911b42cb75a4fe3&q=";
 
-// Returns URL query params as object
-function getParams() {
-    return location.search
-      .substring(1)
-      .split("&")
-      .reduce((acc, curr) => {
-        const [key, value] = curr.split("=");
-  
-        acc[key] = value;
-        return acc;
-      }, {});
-  }
+const { query } = getParams();
+return new Promise((resolve, reject) => {
+    fetch(BASE_URL + query)
+    .then(res => res.json())
+    .then(data => {
+        const articles = createArticleIds(data.articles);
+        resolve(articles);
+    });
+});
+}
