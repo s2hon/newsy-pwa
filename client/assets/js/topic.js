@@ -1,3 +1,5 @@
+import { createElement } from './domMethods'
+
 function checkForIndexedDb() {
   window.indexedDB =
     window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
@@ -207,42 +209,6 @@ function createArticle({
         )
     )
   );
-}
-
-// Helper function for creating elements
-function createElement(type, attributes, ...children) {
-  const element = document.createElement(type);
-
-  if (attributes !== null && typeof attributes === "object") {
-    for (const key in attributes) {
-      if (key.startsWith("on")) {
-        const event = key.substring(2).toLowerCase();
-        const handler = attributes[key];
-
-        element.addEventListener(event, handler);
-      } else {
-        element.setAttribute(key, attributes[key]);
-      }
-    }
-  }
-
-  children.forEach(child => {
-    if (typeof child === "boolean" || child === null || child === undefined) {
-      return;
-    }
-
-    let node;
-
-    if (child instanceof HTMLElement) {
-      node = child;
-    } else {
-      node = document.createTextNode(child);
-    }
-
-    element.appendChild(node);
-  });
-
-  return element;
 }
 
 // Formats and returns date in MMMM/DD/YYYY format
